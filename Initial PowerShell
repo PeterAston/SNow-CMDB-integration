@@ -1,0 +1,11 @@
+	#Connect to SCOM
+	New-SCOMManagementGroupConnection -ComputerName 'SCOM Management Server FQDN'
+	
+	#Retrieve All instances of Microsoft.Windows.Computer class and their properties and export to Excel
+	Get-SCOMClassInstance -Class (Get-SCOMClass -Name 'Microsoft.Windows.Computer') | Select-Object * | Export-Excel -Path \\prs-data\scom\ComputerHealth.xlsx
+		
+	#get all SCOM classes
+	Get-SCOMClass | Select-Object DisplayName, Id | Export-Excel -Path \\prs-data\scom\AllSCOMClasses.xlsx
+	
+	#Retrieve All Enterprise Applications as mapped in SquaredUp and imported into SCOM and all their properties
+  Get-SCOMClassInstance -Class (Get-SCOMClass -DisplayName 'Enterprise Application (v1)') | Select-Object *
